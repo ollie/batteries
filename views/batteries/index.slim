@@ -1,0 +1,32 @@
+.row
+  .col-8
+    - Item.all.each do |item|
+      div style="float: left; margin: 0 15px 15px 0; padding: 15px; border: solid 1px #888;"
+        h3 style="font-size: 16px;" = item.name
+
+        - item.slots.each.with_index do |slot, i|
+          - if slot.battery
+            span.battery-item style=battery_style(slot.battery)
+              span.battery-name style=battery_name_style(slot.battery)
+                = slot.battery.name
+              a.battery-remove href=clear_slot_path(slot.id) title="Vyndat baterii"
+          - else
+            span.js-droppable.battery-slot style=slot_style(slot) data-accept-url=accept_battery_path(slot.id)
+              = i + 1
+  .col-4
+    - Group.all.each do |group|
+      - batteries = group.batteries.select { |b| b.slot.nil? }
+      .clearfix
+      h3 style="font-size: 16px;"
+        | #{group.name} #{group.type}
+        small<
+          | (#{group.batteries_dataset.count}, volné: #{batteries.size})
+
+      - if batteries.size.zero?
+        p
+          em Ničevo.
+
+      - batteries.each do |battery|
+        span.js-draggable.battery-item style=battery_style(battery) data-id=battery.id
+          span.battery-name style="#{battery_name_style(battery)} cursor: move;"
+            = battery.name
