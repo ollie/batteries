@@ -53,3 +53,10 @@
   -ms-touch-action: none;
   touch-action: none;
 }
+
+@media (max-width: 767.98px) {
+  .sm-ov-a {
+    height: 100vh;
+    overflow: auto;
+  }
+}

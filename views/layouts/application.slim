@@ -10,6 +10,7 @@ html lang="cs"
     link rel="stylesheet" href="/css/app.css"
     script src="/js-vendor/jquery-3.3.1.min.js"
     script src="/js-vendor/jquery-ui.min.js"
+    script src="/js-vendor/jquery-ui-touch-punch-0.2.3.min.js"
     script src="/js-vendor/bootstrap-4.3.1.min.js"
     - if Settings.production?
       script src="/js/app.js"
@@ -17,5 +18,5 @@ html lang="cs"
       script src="/coffee/app.coffee" type="text/coffeescript"
       script src="/compilers/coffeescript-2.4.1.min.js"
   body
-    .container-fluid.pt-3.pb-5
+    .container-fluid
       == yield
