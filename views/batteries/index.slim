@@ -1,5 +1,5 @@
 .row
-  .col-8.py-3.sm-ov-a
+  .col-8.py-3.sm-ov-y-a
     - Item.all.each do |item|
       div style="float: left; margin: 0 15px 15px 0; padding: 15px; border: solid 1px #888;"
         h3 style="font-size: 16px;" = item.name
@@ -13,7 +13,7 @@
           - else
             span.js-droppable.battery-slot style=slot_style(slot) data-accept-url=accept_battery_path(slot.id, ':battery_id')
               = i + 1
-  .col-4.py-3.sm-ov-a
+  .col-4.py-3.sm-ov-y-a
     - Group.ordered.each do |group|
       - batteries = group.batteries.select { |b| b.slot.nil? }
       h3 style="font-size: 16px;"
@@ -27,7 +27,7 @@
       - else
         .mb-3
           - batteries.each do |battery|
-            span.js-draggable.battery-item style=battery_style(battery) data-id=battery.id
+            span.js-draggable.battery-item class=('op-30' unless battery.charged) style=battery_style(battery) data-id=battery.id
               span.battery-name style="#{battery_name_style(battery)} cursor: move;"
                 = battery.name
           .clearfix

@@ -54,6 +54,10 @@
   touch-action: none;
 }
 
+.op-30 {
+  opacity: 0.3;
+}
+
 @media (max-width: 767.98px) {
   .sm-ov-a {
     height: 100vh;
