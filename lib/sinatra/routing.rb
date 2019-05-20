@@ -6,17 +6,23 @@ module Sinatra
 
       helpers do
         define_method("#{route_name}_path") do |*args|
-          id        = args.first if args.first && !args.first.is_a?(Hash)
-          qs_params = args.last  if args.last.is_a?(Hash)
+          ids       = args.reject { |arg| arg.is_a?(Hash) }
+          qs_params = args.select { |arg| arg.is_a?(Hash) }.first
 
-          path =
-            if route_path =~ /:id/
-              raise ArgumentError, "Missing :id parameter for route #{route_path}" unless id
-              route_path.gsub(':id', id.to_s)
-            else
-              route_path
-            end
+          path = route_path.dup
 
+          while id_key_match = path.match(/:([a-z]+_)?id/)
+            id_key   = id_key_match[0]
+            id_value = ids.shift
+
+            raise ArgumentError, "Missing #{id_key} parameter for route #{route_path}" unless id_value
+
+            # Prevent infinite loop or id_value being nil
+            id_value = id_value.gsub(':', '!') if id_value.is_a?(String)
+            path.gsub!(id_key, id_value.to_s)
+          end
+
+          path.gsub!('!', ':')
           path += qs(qs_params) if qs_params
           path
         end

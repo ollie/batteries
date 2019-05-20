@@ -1,0 +1,9 @@
+h1.mt-3.mb-3 = title "Upravit věc #{item.name}"
+
+.row
+  .col-sm-6
+    == partial_slim 'items/_form', item: item, url: edit_item_path(item.id)
+
+  .col-sm-6.text-right
+    form action=delete_item_path(item.id) method="post" data-confirm="Opravdu chcete smazat věc?"
+      input.btn.btn-outline-danger type="submit" value="Smazat"

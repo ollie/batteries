@@ -1,0 +1,22 @@
+.row.mt-3
+  .col-sm-10
+    h1.mb-3 = title 'Skupiny'
+  .col-sm-2.text-right
+    a.btn.btn-outline-primary.w-100.mb-3 href=new_group_path Přidat
+
+- Group.ordered.each do |group|
+  h3
+    a href=edit_group_path(group.id)
+      = group.full_name
+
+  ul.list-unstyled
+    - group.batteries.each do |battery|
+      li
+        a href=edit_battery_path(battery.id)
+          = battery.name
+        - if battery.slot
+          small<
+            | (#{battery.slot.item.name})
+
+  p
+    a.btn.btn-sm.btn-outline-primary href=new_group_battery_path(group.id) Přidat baterii

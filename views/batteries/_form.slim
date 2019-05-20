@@ -1,0 +1,72 @@
+form action=url method="post"
+  .form-group.row
+    label.col-sm-4.col-form-label for="battery-group" Skupina
+    .col-sm-8
+      input.form-control-plaintext(
+        type="text"
+        id="battery-group"
+        value=battery.group.full_name
+        readonly
+      )
+
+  .form-group.row
+    label.col-sm-4.col-form-label for="battery-name" Název
+    .col-sm-8
+      input.form-control(
+        type="text"
+        id="battery-name"
+        name="battery[name]"
+        value=battery.name
+        class=('is-invalid' if battery.errors.on(:name))
+        autofocus
+      )
+      - if battery.errors.on(:name)
+        .invalid-feedback = battery.errors.on(:name).join(', ')
+
+  .form-group.row
+    label.col-sm-4.col-form-label for="battery-type" Typ
+    .col-sm-8
+      select.form-control(
+        id="battery-type"
+        name="battery[type]"
+        class=('is-invalid' if battery.errors.on(:type))
+      )
+        - Battery::TYPES.each do |type|
+          option value=type selected=(battery.type == type)
+            = type
+      - if battery.errors.on(:type)
+        .invalid-feedback = battery.errors.on(:type).join(', ')
+
+  .form-group.row
+    label.col-sm-4.col-form-label for="battery-color" Barva
+    .col-sm-2
+      input.form-control(
+        type="color"
+        id="battery-color"
+        name="battery[color]"
+        value=battery.color
+        class=('is-invalid' if battery.errors.on(:color))
+      )
+      - if battery.errors.on(:color)
+        .invalid-feedback = battery.errors.on(:color).join(', ')
+
+  .form-group.row
+    .offset-sm-4.col-sm-8
+      .form-check
+        input type="hidden" name="battery[dark]" value="0"
+        input.form-check-input type="checkbox" id="battery-dark" name="battery[dark]" value="1" checked=battery.dark
+        label.form-check-label for="battery-dark"
+          | Tmavá?
+
+  .form-group.row
+    .offset-sm-4.col-sm-8
+      .form-check
+        input type="hidden" name="battery[charged]" value="0"
+        input.form-check-input type="checkbox" id="battery-charged" name="battery[charged]" value="1" checked=battery.charged
+        label.form-check-label for="battery-charged"
+          | Nabitá?
+
+  .form-group.row
+    .offset-sm-4.col-sm-8
+      button.btn.btn-outline-primary> = battery.new? ? 'Přidat' : 'Uložit'
+      a.btn.btn-outline-secondary href=groups_path Storno

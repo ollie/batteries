@@ -12,6 +12,16 @@ class Item < Sequel::Model
 
   one_to_many :slots, order: :id
 
+  #################
+  # Dataset methods
+  #################
+
+  dataset_module do
+    def ordered
+      order(:id)
+    end
+  end
+
   #############
   # Validations
   #############

@@ -1,4 +1,10 @@
 class Battery < Sequel::Model
+  ###########
+  # Constants
+  ###########
+
+  TYPES = %w[AA AAA].freeze
+
   #########
   # Plugins
   #########
@@ -14,6 +20,21 @@ class Battery < Sequel::Model
   many_to_one :group
   one_to_one :slot
 
+  ###############
+  # Class methods
+  ###############
+
+  class << self
+    def new_with_defaults(group)
+      new(
+        group_id: group.id,
+        name: "#{group.name} #{group.batteries.count + 1}",
+        type: group.type,
+        color: group.batteries.last&.color
+      )
+    end
+  end
+
   #############
   # Validations
   #############
@@ -23,10 +44,13 @@ class Battery < Sequel::Model
 
     validates_presence [
       :group_id,
+      :name,
       :color
     ]
 
-    errors.add(:group_id, :invalid) if group_id && group.type != type
+    validates_includes TYPES, :type
+
+    errors.add(:type, I18n.t('sequel.errors.invalid')) if group_id && group.type != type
   end
 
   #########################

@@ -11,13 +11,13 @@
                 = slot.battery.name
               a.battery-remove href=clear_slot_path(slot.id) title="Vyndat baterii"
           - else
-            span.js-droppable.battery-slot style=slot_style(slot) data-accept-url=accept_battery_path(slot.id)
+            span.js-droppable.battery-slot style=slot_style(slot) data-accept-url=accept_battery_path(slot.id, ':battery_id')
               = i + 1
   .col-4.py-3.sm-ov-a
-    - Group.all.each do |group|
+    - Group.ordered.each do |group|
       - batteries = group.batteries.select { |b| b.slot.nil? }
       h3 style="font-size: 16px;"
-        | #{group.name} #{group.type}
+        = group.full_name
         small<
           | (#{group.batteries_dataset.count}, volné: #{batteries.size})
 

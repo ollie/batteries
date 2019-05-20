@@ -1,0 +1,5 @@
+h1.mt-3.mb-3 = title 'Přidat novou věc'
+
+.row
+  .col-sm-6
+    == partial_slim 'items/_form', item: item, url: new_item_path

@@ -1,4 +1,10 @@
 class Slot < Sequel::Model
+  ###########
+  # Constants
+  ###########
+
+  TYPES = %w[AA AAA].freeze
+
   #########
   # Plugins
   #########
@@ -14,6 +20,19 @@ class Slot < Sequel::Model
   many_to_one :item
   many_to_one :battery
 
+  ###############
+  # Class methods
+  ###############
+
+  class << self
+    def new_with_defaults(item)
+      new(
+        item_id: item.id,
+        type: item.slots.last&.type
+      )
+    end
+  end
+
   #############
   # Validations
   #############
@@ -26,9 +45,9 @@ class Slot < Sequel::Model
       :type
     ]
 
-    validates_includes ['AA', 'AAA'], :type
+    validates_includes TYPES, :type
 
-    errors.add(:battery_id, :invalid) if battery_id && battery.type != type
+    errors.add(:type, I18n.t('sequel.errors.invalid')) if battery_id && battery.type != type
   end
 
   #########################

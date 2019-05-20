@@ -1,4 +1,10 @@
 class Group < Sequel::Model
+  ###########
+  # Constants
+  ###########
+
+  TYPES = %w[AA AAA].freeze
+
   #########
   # Plugins
   #########
@@ -12,6 +18,16 @@ class Group < Sequel::Model
 
   one_to_many :batteries, order: :id
 
+  #################
+  # Dataset methods
+  #################
+
+  dataset_module do
+    def ordered
+      order(:id)
+    end
+  end
+
   #############
   # Validations
   #############
@@ -24,6 +40,14 @@ class Group < Sequel::Model
       :type
     ]
 
-    validates_includes ['AA', 'AAA'], :type
+    validates_includes TYPES, :type
+  end
+
+  #########################
+  # Public instance methods
+  #########################
+
+  def full_name
+    "#{name} #{type}"
   end
 end

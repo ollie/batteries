@@ -1,0 +1,29 @@
+form action=url method="post"
+  .form-group.row
+    label.col-sm-4.col-form-label for="slot-item" Věc
+    .col-sm-8
+      input.form-control-plaintext(
+        type="text"
+        id="slot-item"
+        value=slot.item.name
+        readonly
+      )
+
+  .form-group.row
+    label.col-sm-4.col-form-label for="slot-type" Typ
+    .col-sm-8
+      select.form-control(
+        id="slot-type"
+        name="slot[type]"
+        class=('is-invalid' if slot.errors.on(:type))
+      )
+        - Slot::TYPES.each do |type|
+          option value=type selected=(slot.type == type)
+            = type
+      - if slot.errors.on(:type)
+        .invalid-feedback = slot.errors.on(:type).join(', ')
+
+  .form-group.row
+    .offset-sm-4.col-sm-8
+      button.btn.btn-outline-primary> = slot.new? ? 'Přidat' : 'Uložit'
+      a.btn.btn-outline-secondary href=items_path Storno

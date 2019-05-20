@@ -1,0 +1,16 @@
+nav.navbar.navbar-expand-lg.navbar-light.bg-light
+  a href=batteries_path
+    span.mr-2
+      img src="/images/favicon-64x64.png" alt="" width="32" height="32"
+
+  button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbar-collapse"
+    span.navbar-toggler-icon
+
+  .collapse.navbar-collapse id="navbar-collapse"
+    ul.navbar-nav.mr-auto
+      li.nav-item class=('active' if request.path =~ %r{^#{batteries_path}})
+        a.nav-link href=batteries_path Baterie
+      li.nav-item class=('active' if request.path =~ %r{^#{items_path}})
+        a.nav-link href=items_path Věci
+      li.nav-item class=('active' if request.path =~ %r{^#{groups_path}})
+        a.nav-link href=groups_path Skupiny

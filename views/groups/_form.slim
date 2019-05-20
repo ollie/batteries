@@ -1,0 +1,33 @@
+form action=url method="post"
+  .form-group.row
+    label.col-sm-4.col-form-label for="group-name" Název
+    .col-sm-8
+      input.form-control(
+        type="text"
+        id="group-name"
+        name="group[name]"
+        value=group.name
+        class=('is-invalid' if group.errors.on(:name))
+        autofocus
+      )
+      - if group.errors.on(:name)
+        .invalid-feedback = group.errors.on(:name).join(', ')
+
+  .form-group.row
+    label.col-sm-4.col-form-label for="group-type" Typ
+    .col-sm-8
+      select.form-control(
+        id="group-type"
+        name="group[type]"
+        class=('is-invalid' if group.errors.on(:type))
+      )
+        - Group::TYPES.each do |type|
+          option value=type selected=(group.type == type)
+            = type
+      - if group.errors.on(:type)
+        .invalid-feedback = group.errors.on(:type).join(', ')
+
+  .form-group.row
+    .offset-sm-4.col-sm-8
+      button.btn.btn-outline-primary> = group.new? ? 'Přidat' : 'Uložit'
+      a.btn.btn-outline-secondary href=groups_path Storno
