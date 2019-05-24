@@ -60,4 +60,8 @@ class Battery < Sequel::Model
   def aaa?
     type == 'AAA'
   end
+
+  def charge
+    update(charged: true)
+  end
 end

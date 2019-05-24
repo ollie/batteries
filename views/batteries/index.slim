@@ -9,7 +9,7 @@
             span.battery-item style=battery_style(slot.battery)
               span.battery-name style=battery_name_style(slot.battery)
                 = slot.battery.name
-              a.battery-remove href=clear_slot_path(slot.id) title="Vyndat baterii"
+              a.battery-action-icon.battery-remove href=clear_slot_path(slot.id) title="Vyndat baterii" &times;
           - else
             span.js-droppable.battery-slot style=slot_style(slot) data-accept-url=accept_battery_path(slot.id, ':battery_id')
               = i + 1
@@ -30,5 +30,7 @@
             span.js-draggable.battery-item class=('op-30' unless battery.charged) style=battery_style(battery) data-id=battery.id
               span.battery-name style="#{battery_name_style(battery)} cursor: move;"
                 = battery.name
+              - unless battery.charged
+                a.battery-action-icon.battery-charge href=charge_battery_path(battery.id) title="Nabít baterii" &check;
           .clearfix
 

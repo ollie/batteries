@@ -73,7 +73,13 @@ class App < Sinatra::Base
 
   get Route(clear_slot: '/slots/:id/clear') do
     slot = Slot.with_pk!(params[:id])
-    slot.update(battery: nil)
+    slot.clear
+    redirect batteries_path
+  end
+
+  get Route(charge_battery: '/batteries/:id/charge') do
+    battery = Battery.with_pk!(params[:id])
+    battery.charge
     redirect batteries_path
   end
 

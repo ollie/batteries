@@ -57,4 +57,9 @@ class Slot < Sequel::Model
   def aaa?
     type == 'AAA'
   end
+
+  def clear
+    battery.update(charged: false)
+    update(battery: nil)
+  end
 end
