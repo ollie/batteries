@@ -1,5 +1,38 @@
 module Sinatra
   module Routing
+    module Helpers
+      def qs(hash)
+        params = self.params.except('captures', 'splat', 'id')
+        params.merge!(hash.stringify_keys)
+        params.scrub!
+
+        encoded_params = serialize_qs(params)
+
+        if encoded_params.empty?
+          ''
+        else
+          "?#{encoded_params}"
+        end
+      end
+
+      private
+
+      def serialize_qs(params)
+        serialized_params = []
+
+        params.each do |key, value|
+          next if value.is_a?(Hash)
+          serialized_params << "#{CGI.escape(key.to_s)}=#{CGI.escape(value.to_s)}"
+        end
+
+        serialized_params.join('&')
+      end
+    end
+
+    def self.registered(app)
+      app.helpers Routing::Helpers
+    end
+
     def Route(hash)
       route_name = hash.keys.first
       route_path = hash[route_name]
