@@ -18,7 +18,7 @@ class Item < Sequel::Model
 
   dataset_module do
     def ordered
-      order(:id)
+      order(:name)
     end
   end
 
