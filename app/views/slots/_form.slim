@@ -16,6 +16,7 @@ form action=url method="post"
         id="slot-type"
         name="slot[type]"
         class=('is-invalid' if slot.errors.on(:type))
+        autofocus
       )
         - Slot::TYPES.each do |type|
           option value=type selected=(slot.type == type)

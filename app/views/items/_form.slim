@@ -22,7 +22,6 @@ form action=url method="post"
         name="item[css_class]"
         value=item.css_class
         class=('is-invalid' if item.errors.on(:css_class))
-        autofocus
       )
       - if item.errors.on(:css_class)
         .invalid-feedback = item.errors.on(:css_class).join(', ')
