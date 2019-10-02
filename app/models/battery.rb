@@ -28,9 +28,9 @@ class Battery < Sequel::Model
     def new_with_defaults(group)
       new(
         group_id: group.id,
-        name: "#{group.name} #{group.batteries.count + 1}",
-        type: group.type,
-        color: group.batteries.last&.color
+        name:     "#{group.name} #{group.batteries.count + 1}",
+        type:     group.type,
+        color:    group.batteries.last&.color
       )
     end
   end
@@ -42,10 +42,10 @@ class Battery < Sequel::Model
   def validate
     super
 
-    validates_presence [
-      :group_id,
-      :name,
-      :color
+    validates_presence %i[
+      group_id
+      name
+      color
     ]
 
     validates_includes TYPES, :type

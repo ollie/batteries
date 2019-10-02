@@ -35,9 +35,9 @@ class Group < Sequel::Model
   def validate
     super
 
-    validates_presence [
-      :name,
-      :type
+    validates_presence %i[
+      name
+      type
     ]
 
     validates_includes TYPES, :type

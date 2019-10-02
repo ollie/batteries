@@ -104,7 +104,7 @@ class App < Sinatra::Base
 
   post '/groups/new' do
     group = Group.new
-    group.set_fields(params[:group], [:name, :type])
+    group.set_fields(params[:group], %i[name type])
 
     if group.valid?
       group.save
@@ -124,7 +124,7 @@ class App < Sinatra::Base
 
   post '/groups/:id/edit' do
     group = Group.with_pk!(params[:id])
-    group.set_fields(params[:group], [:name, :type])
+    group.set_fields(params[:group], %i[name type])
 
     if group.valid?
       group.save
@@ -154,7 +154,7 @@ class App < Sinatra::Base
 
   post '/groups/:group_id/batteries/new' do
     battery = Battery.new(group_id: Group.with_pk!(params[:group_id]).id)
-    battery.set_fields(params[:battery], [:name, :type, :color, :dark, :charged])
+    battery.set_fields(params[:battery], %i[name type color dark charged])
 
     if battery.valid?
       battery.save
@@ -174,7 +174,7 @@ class App < Sinatra::Base
 
   post '/batteries/:id/edit' do
     battery = Battery.with_pk!(params[:id])
-    battery.set_fields(params[:battery], [:name, :type, :color, :dark, :charged])
+    battery.set_fields(params[:battery], %i[name type color dark charged])
 
     if battery.valid?
       battery.save
@@ -212,7 +212,7 @@ class App < Sinatra::Base
 
   post '/items/new' do
     item = Item.new
-    item.set_fields(params[:item], [:name, :css_class])
+    item.set_fields(params[:item], %i[name css_class])
 
     if item.valid?
       item.save
@@ -232,7 +232,7 @@ class App < Sinatra::Base
 
   post '/items/:id/edit' do
     item = Item.with_pk!(params[:id])
-    item.set_fields(params[:item], [:name, :css_class])
+    item.set_fields(params[:item], %i[name css_class])
 
     if item.valid?
       item.save

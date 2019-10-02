@@ -28,7 +28,7 @@ class Slot < Sequel::Model
     def new_with_defaults(item)
       new(
         item_id: item.id,
-        type: item.slots.last&.type
+        type:    item.slots.last&.type
       )
     end
   end
@@ -40,9 +40,9 @@ class Slot < Sequel::Model
   def validate
     super
 
-    validates_presence [
-      :item_id,
-      :type
+    validates_presence %i[
+      item_id
+      type
     ]
 
     validates_includes TYPES, :type
