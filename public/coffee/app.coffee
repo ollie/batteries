@@ -1,35 +1,14 @@
-class Confirm
-  constructor: ->
-    $items = $('[data-confirm]')
-    $items.on('click', this._handleClick)
+initComponents = ->
+  componentsMap = {}
 
-  _handleClick: (e) =>
-    $item   = $(e.currentTarget)
-    message = $item.data('confirm')
+  for item in $('[data-js-component]')
+    $item = $(item)
+    componentsMap[$item.data('js-component')] = true
 
-    if message && !confirm(message)
-      e.preventDefault()
-
-
+  for componentName, _ of componentsMap
+    component = window[componentName]
+    console.log("Initializing #{componentName}")
+    new component
 
 $ ->
-  new Confirm
-
-  $('.js-draggable').draggable(
-    # revert: true
-    revertDuration: 200
-  )
-
-  $('.js-droppable').droppable(
-    accept: '.js-draggable'
-    tolerance: 'intersect'
-    drop: (e, ui) ->
-      $slot     = $(this)
-      $battery  = ui.draggable
-      batteryId = $battery.data('id')
-
-      url = $slot.data('accept-url')
-      url = url.replace(':battery_id', batteryId)
-
-      window.location = url
-  )
+  initComponents()

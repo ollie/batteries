@@ -6,5 +6,5 @@ h1.mt-3.mb-3 = title "Upravit skupinu #{group.name}"
 
   - if group.batteries.none?
     .col-sm-6.text-right
-      form action=delete_group_path(group.id) method="post" data-confirm="Opravdu chcete smazat skupinu?"
+      form action=delete_group_path(group.id) method="post" data-js-component="Confirm" data-confirm="Opravdu chcete smazat skupinu?"
         input.btn.btn-outline-danger type="submit" value="Smazat"

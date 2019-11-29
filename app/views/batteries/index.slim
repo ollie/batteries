@@ -25,7 +25,7 @@
         p.mb-3
           em Ničevo.
       - else
-        .mb-3
+        .mb-3 data-js-component="Dragdrop"
           - batteries.each do |battery|
             span.js-draggable.battery-item class=('op-30' unless battery.charged) style=battery_style(battery) data-id=battery.id
               span.battery-name style="#{battery_name_style(battery)} cursor: move;"

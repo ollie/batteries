@@ -6,5 +6,5 @@ h1.mt-3.mb-3 = title "Upravit baterii #{battery.name}"
 
   - unless battery.slot
     .col-sm-6.text-right
-      form action=delete_battery_path(battery.id) method="post" data-confirm="Opravdu chcete smazat baterii?"
+      form action=delete_battery_path(battery.id) method="post" data-js-component="Confirm" data-confirm="Opravdu chcete smazat baterii?"
         input.btn.btn-outline-danger type="submit" value="Smazat"

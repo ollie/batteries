@@ -5,5 +5,5 @@ h1.mt-3.mb-3 = title 'Upravit slot'
     == partial_slim 'slots/_form', slot: slot, url: edit_slot_path(slot.id)
 
   .col-sm-6.text-right
-    form action=delete_slot_path(slot.id) method="post" data-confirm="Opravdu chcete smazat slot?"
+    form action=delete_slot_path(slot.id) method="post" data-js-component="Confirm" data-confirm="Opravdu chcete smazat slot?"
       input.btn.btn-outline-danger type="submit" value="Smazat"
