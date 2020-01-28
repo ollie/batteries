@@ -18,7 +18,9 @@ class Item < Sequel::Model
 
   dataset_module do
     def ordered
-      order(:name)
+      select(Sequel[:items].*, Sequel.~(Sequel[:slots][:id] => nil).as(:has_batteries)).left_join(:slots, item_id: :id) do |j, lj, js|
+        Sequel.~(Sequel[:slots][:battery_id] => nil)
+      end.group(Sequel[:items][:id], :has_batteries).order(Sequel.desc(:has_batteries), :name)
     end
   end
 
