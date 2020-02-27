@@ -145,28 +145,41 @@ class App < Sinatra::Base
   ###########
 
   get Route(new_group_battery: '/groups/:group_id/batteries/new') do
+    group = Group.with_pk!(params[:group_id])
+
     slim :'batteries/new', locals: {
-      battery: Battery.new_with_defaults(Group.with_pk!(params[:group_id]))
+      group:   group,
+      battery: Battery.new_with_defaults(group)
     }
   end
 
   post '/groups/:group_id/batteries/new' do
-    battery = Battery.new(group_id: Group.with_pk!(params[:group_id]).id)
+    group   = Group.with_pk!(params[:group_id])
+    battery = Battery.new(group_id: group.id)
     battery.set_fields(params[:battery], %i[name type color dark charged])
 
     if battery.valid?
       battery.save
-      redirect groups_path
+      if params[:add_another].present?
+        redirect new_group_battery_path(group.id)
+      else
+        redirect edit_group_path(group.id)
+      end
     else
       slim :'batteries/new', locals: {
+        group:   group,
         battery: battery
       }
     end
   end
 
   get Route(edit_battery: '/batteries/:id/edit') do
+    battery = Battery.with_pk!(params[:id])
+    group   = battery.group
+
     slim :'batteries/edit', locals: {
-      battery: Battery.with_pk!(params[:id])
+      group:   group,
+      battery: battery
     }
   end
 
@@ -176,9 +189,10 @@ class App < Sinatra::Base
 
     if battery.valid?
       battery.save
-      redirect groups_path
+      redirect edit_group_path(battery.group_id)
     else
       slim :'batteries/edit', locals: {
+        group:   battery.group,
         battery: battery
       }
     end
@@ -187,7 +201,7 @@ class App < Sinatra::Base
   post Route(delete_battery: '/batteries/:id/delete') do
     battery = Battery.with_pk!(params[:id])
     battery.destroy
-    redirect groups_path
+    redirect edit_group_path(battery.group_id)
   end
 
   #######
@@ -214,7 +228,7 @@ class App < Sinatra::Base
 
     if item.valid?
       item.save
-      redirect items_path
+      redirect edit_item_path(item.id)
     else
       slim :'items/new', locals: {
         item: item
@@ -253,28 +267,40 @@ class App < Sinatra::Base
   #######
 
   get Route(new_item_slot: '/items/:item_id/slots/new') do
+    item = Item.with_pk!(params[:item_id])
+
     slim :'slots/new', locals: {
-      slot: Slot.new_with_defaults(Item.with_pk!(params[:item_id]))
+      item: item,
+      slot: Slot.new_with_defaults(item)
     }
   end
 
   post '/items/:item_id/slots/new' do
-    slot = Slot.new(item_id: Item.with_pk!(params[:item_id]).id)
+    item = Item.with_pk!(params[:item_id])
+    slot = Slot.new(item_id: item.id)
     slot.set_fields(params[:slot], [:type])
 
     if slot.valid?
       slot.save
-      redirect items_path
+      if params[:add_another].present?
+        redirect new_item_slot_path(item.id)
+      else
+        redirect edit_item_path(item.id)
+      end
     else
       slim :'slots/new', locals: {
+        item: item,
         slot: slot
       }
     end
   end
 
   get Route(edit_slot: '/slots/:id/edit') do
+    slot = Slot.with_pk!(params[:id])
+
     slim :'slots/edit', locals: {
-      slot: Slot.with_pk!(params[:id])
+      item: slot.item,
+      slot: slot
     }
   end
 
@@ -284,9 +310,10 @@ class App < Sinatra::Base
 
     if slot.valid?
       slot.save
-      redirect items_path
+      redirect edit_item_path(slot.item_id)
     else
       slim :'slots/edit', locals: {
+        item: slot.item,
         slot: slot
       }
     end
@@ -295,6 +322,6 @@ class App < Sinatra::Base
   post Route(delete_slot: '/slots/:id/delete') do
     slot = Slot.with_pk!(params[:id])
     slot.destroy
-    redirect items_path
+    redirect edit_item_path(slot.item_id)
   end
 end

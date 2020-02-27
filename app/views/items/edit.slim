@@ -1,4 +1,4 @@
-h1.mt-3.mb-3 = title "Upravit věc #{item.name}"
+h1.mt-3.mb-3 = title item.name
 
 .row
   .col-sm-6
@@ -7,3 +7,17 @@ h1.mt-3.mb-3 = title "Upravit věc #{item.name}"
   .col-sm-6.text-right
     form action=delete_item_path(item.id) method="post" data-js-component="Confirm" data-confirm="Opravdu chcete smazat věc?"
       input.btn.btn-outline-danger type="submit" value="Smazat"
+
+h3 Sloty
+
+ul.list-unstyled
+  - item.slots.each.with_index do |slot, index|
+    li
+      a href=edit_slot_path(slot.id)
+        | #{index + 1} #{slot.type}
+      - if slot.battery
+        small<
+          | (#{slot.battery.name})
+
+p
+  a.btn.btn-outline-primary href=new_item_slot_path(item.id) Přidat slot

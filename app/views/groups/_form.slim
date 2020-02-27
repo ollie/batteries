@@ -1,21 +1,21 @@
 form action=url method="post"
   .form-group.row
-    label.col-sm-4.col-form-label for="group-name" Název
-    .col-sm-8
+    label.col-sm-2.col-form-label for="group-name" Název
+    .col-sm-10
       input.form-control(
         type="text"
         id="group-name"
         name="group[name]"
         value=group.name
         class=('is-invalid' if group.errors.on(:name))
-        autofocus
+        autofocus=('autofocus' if group.new?)
       )
       - if group.errors.on(:name)
         .invalid-feedback = group.errors.on(:name).join(', ')
 
   .form-group.row
-    label.col-sm-4.col-form-label for="group-type" Typ
-    .col-sm-8
+    label.col-sm-2.col-form-label for="group-type" Typ
+    .col-sm-10
       select.form-control(
         id="group-type"
         name="group[type]"
@@ -28,6 +28,6 @@ form action=url method="post"
         .invalid-feedback = group.errors.on(:type).join(', ')
 
   .form-group.row
-    .offset-sm-4.col-sm-8
+    .offset-sm-2.col-sm-10
       button.btn.btn-outline-primary> = group.new? ? 'Přidat' : 'Uložit'
       a.btn.btn-outline-secondary href=groups_path Storno
