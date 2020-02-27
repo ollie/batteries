@@ -26,11 +26,13 @@ class Battery < Sequel::Model
 
   class << self
     def new_with_defaults(group)
+      last_battery = group.batteries.last
       new(
         group_id: group.id,
         name:     "#{group.name} #{group.batteries.count + 1}",
         type:     group.type,
-        color:    group.batteries.last&.color
+        dark:     last_battery&.dark,
+        color:    last_battery&.color
       )
     end
   end
