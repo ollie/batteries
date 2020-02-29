@@ -1,4 +1,7 @@
-h1.mt-3.mb-3 = title "#{item.name}: #{slot.type}"
+p.mt-3
+  a.btn.btn-outline-secondary href=item_path(item.id) = "← #{item.name}"
+
+h1.mt-3.mb-3 = title "Upravit slot #{item.name}: #{slot.type}"
 
 .row
   .col-sm-6

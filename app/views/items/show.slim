@@ -1,0 +1,21 @@
+p.mt-3
+  a.btn.btn-outline-secondary href=items_path ← Věci
+
+.row.mt-3
+  .col-sm-10
+    h1.mb-3 = title item.name
+  .col-sm-2.text-right
+    a.btn.btn-outline-primary.w-100.mb-3 href=edit_item_path(item.id) Upravit
+
+- unless item.slots.count.zero?
+  ul.list-unstyled
+    - item.slots.each.with_index do |slot, index|
+      li
+        a href=edit_slot_path(slot.id)
+          | #{index + 1} #{slot.type}
+        - if slot.battery
+          small<
+            | (#{slot.battery.name})
+
+p
+  a.btn.btn-outline-primary href=new_item_slot_path(item.id) Přidat slot

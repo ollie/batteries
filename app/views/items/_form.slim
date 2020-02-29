@@ -8,7 +8,7 @@ form action=url method="post"
         name="item[name]"
         value=item.name
         class=('is-invalid' if item.errors.on(:name))
-        autofocus=('autofocus' if item.new?)
+        autofocus
       )
       - if item.errors.on(:name)
         .invalid-feedback = item.errors.on(:name).join(', ')
@@ -29,4 +29,4 @@ form action=url method="post"
   .form-group.row
     .offset-sm-3.col-sm-9
       button.btn.btn-outline-primary> = item.new? ? 'Přidat' : 'Uložit'
-      a.btn.btn-outline-secondary href=items_path Storno
+      a.btn.btn-outline-secondary href=(item.new? ? items_path : item_path(item.id)) Storno

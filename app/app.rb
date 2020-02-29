@@ -106,7 +106,7 @@ class App < Sinatra::Base
 
     if group.valid?
       group.save
-      redirect groups_path
+      redirect group_path(group.id)
     else
       slim :'groups/new', locals: {
         group: group
@@ -126,7 +126,7 @@ class App < Sinatra::Base
 
     if group.valid?
       group.save
-      redirect groups_path
+      redirect group_path(group.id)
     else
       slim :'groups/edit', locals: {
         group: group
@@ -138,6 +138,12 @@ class App < Sinatra::Base
     group = Group.with_pk!(params[:id])
     group.destroy
     redirect groups_path
+  end
+
+  get Route(group: '/groups/:id') do
+    slim :'groups/show', locals: {
+      group: Group.with_pk!(params[:id])
+    }
   end
 
   ###########
@@ -163,7 +169,7 @@ class App < Sinatra::Base
       if params[:add_another].present?
         redirect new_group_battery_path(group.id)
       else
-        redirect edit_group_path(group.id)
+        redirect group_path(group.id)
       end
     else
       slim :'batteries/new', locals: {
@@ -189,7 +195,7 @@ class App < Sinatra::Base
 
     if battery.valid?
       battery.save
-      redirect edit_group_path(battery.group_id)
+      redirect group_path(battery.group_id)
     else
       slim :'batteries/edit', locals: {
         group:   battery.group,
@@ -201,7 +207,7 @@ class App < Sinatra::Base
   post Route(delete_battery: '/batteries/:id/delete') do
     battery = Battery.with_pk!(params[:id])
     battery.destroy
-    redirect edit_group_path(battery.group_id)
+    redirect group_path(battery.group_id)
   end
 
   #######
@@ -228,7 +234,7 @@ class App < Sinatra::Base
 
     if item.valid?
       item.save
-      redirect edit_item_path(item.id)
+      redirect item_path(item.id)
     else
       slim :'items/new', locals: {
         item: item
@@ -262,6 +268,12 @@ class App < Sinatra::Base
     redirect items_path
   end
 
+  get Route(item: '/items/:id') do
+    slim :'items/show', locals: {
+      item: Item.with_pk!(params[:id])
+    }
+  end
+
   #######
   # Slots
   #######
@@ -285,7 +297,7 @@ class App < Sinatra::Base
       if params[:add_another].present?
         redirect new_item_slot_path(item.id)
       else
-        redirect edit_item_path(item.id)
+        redirect item_path(item.id)
       end
     else
       slim :'slots/new', locals: {
@@ -322,6 +334,6 @@ class App < Sinatra::Base
   post Route(delete_slot: '/slots/:id/delete') do
     slot = Slot.with_pk!(params[:id])
     slot.destroy
-    redirect edit_item_path(slot.item_id)
+    redirect item_path(slot.item_id)
   end
 end

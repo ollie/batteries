@@ -61,4 +61,4 @@ form action=url method="post"
       button.btn.btn-outline-primary> = battery.new? ? 'Přidat' : 'Uložit'
       - if battery.new?
         button.btn.btn-outline-primary> name="add_another" value="1" Přidat další
-      a.btn.btn-outline-secondary href=edit_group_path(battery.group_id) Storno
+      a.btn.btn-outline-secondary href=group_path(battery.group_id) Storno

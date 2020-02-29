@@ -19,4 +19,4 @@ form action=url method="post"
       button.btn.btn-outline-primary> = slot.new? ? 'Přidat' : 'Uložit'
       - if slot.new?
         button.btn.btn-outline-primary> name="add_another" value="1" Přidat další
-      a.btn.btn-outline-secondary href=edit_item_path(slot.item_id) Storno
+      a.btn.btn-outline-secondary href=item_path(slot.item_id) Storno

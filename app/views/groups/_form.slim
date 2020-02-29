@@ -8,7 +8,7 @@ form action=url method="post"
         name="group[name]"
         value=group.name
         class=('is-invalid' if group.errors.on(:name))
-        autofocus=('autofocus' if group.new?)
+        autofocus
       )
       - if group.errors.on(:name)
         .invalid-feedback = group.errors.on(:name).join(', ')
@@ -30,4 +30,4 @@ form action=url method="post"
   .form-group.row
     .offset-sm-2.col-sm-10
       button.btn.btn-outline-primary> = group.new? ? 'Přidat' : 'Uložit'
-      a.btn.btn-outline-secondary href=groups_path Storno
+      a.btn.btn-outline-secondary href=(group.new? ? groups_path : group_path(group.id)) Storno

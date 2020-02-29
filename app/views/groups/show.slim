@@ -1,0 +1,21 @@
+p.mt-3
+  a.btn.btn-outline-secondary href=groups_path ← Skupiny
+
+.row.mt-3
+  .col-sm-10
+    h1.mb-3 = title group.name
+  .col-sm-2.text-right
+    a.btn.btn-outline-primary.w-100.mb-3 href=edit_group_path(group.id) Upravit
+
+- unless group.batteries.count.zero?
+  ul.list-unstyled
+    - group.batteries.each do |battery|
+      li
+        a href=edit_battery_path(battery.id)
+          = battery.name
+        - if battery.slot
+          small<
+            | (#{battery.slot.item.name})
+
+p
+  a.btn.btn-outline-primary href=new_group_battery_path(group.id) Přidat baterii

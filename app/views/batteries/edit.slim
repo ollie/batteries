@@ -1,4 +1,7 @@
-h1.mt-3.mb-3 = title "#{group.full_name}: #{battery.name}"
+p.mt-3
+  a.btn.btn-outline-secondary href=group_path(group.id) = "← #{group.name}"
+
+h1.mt-3.mb-3 = title "Upravit baterii #{group.full_name}: #{battery.name}"
 
 .row
   .col-sm-6
