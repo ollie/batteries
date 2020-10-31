@@ -5,6 +5,7 @@ class Item < Sequel::Model
 
   plugin :validation_helpers
   plugin :translated_validation_messages
+  plugin :defaults_setter
 
   ##############
   # Associations
@@ -17,6 +18,10 @@ class Item < Sequel::Model
   #################
 
   dataset_module do
+    def enabled
+      where(enabled: true)
+    end
+
     def ordered
       select(Sequel[:items].*, Sequel.~(Sequel[:slots][:id] => nil).as(:has_batteries)).left_join(:slots, item_id: :id) do |j, lj, js|
         Sequel.~(Sequel[:slots][:battery_id] => nil)

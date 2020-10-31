@@ -10,6 +10,7 @@ Sequel.migration do
       primary_key :id
       column :name, 'character varying(255)', null: false
       column :css_class, 'character varying(255)'
+      column :enabled, 'boolean', default: true, null: false
     end
 
     create_table(:schema_info) do

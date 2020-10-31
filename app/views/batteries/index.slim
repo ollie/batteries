@@ -1,6 +1,6 @@
 .row
   .col-8.py-3.sm-ov-y-a
-    - Item.ordered.each do |item|
+    - Item.enabled.ordered.each do |item|
       div style="float: left; margin: 0 15px 15px 0; padding: 15px; border: solid 1px #888;"
         h3 style="font-size: 16px;" = item.name
 

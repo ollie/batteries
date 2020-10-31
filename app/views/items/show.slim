@@ -3,7 +3,10 @@ p.mt-3
 
 .row.mt-3
   .col-sm-10
-    h1.mb-3 = title item.name
+    h1.mb-3
+      = title item.name
+      - unless item.enabled
+        small.text-black-50 = ' (vypnuto)'
   .col-sm-2.text-right
     a.btn.btn-outline-primary.w-100.mb-3 href=edit_item_path(item.id) Upravit
 

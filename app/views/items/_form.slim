@@ -1,5 +1,13 @@
 form action=url method="post"
   .form-group.row
+    .offset-sm-3.col-sm-9
+      .form-check
+        input type="hidden" name="item[enabled]" value="0"
+        input.form-check-input type="checkbox" id="item-enabled" name="item[enabled]" value="1" checked=item.enabled
+        label.form-check-label for="item-enabled"
+          | Zapnuto?
+
+  .form-group.row
     label.col-sm-3.col-form-label for="item-name" Název
     .col-sm-9
       input.form-control(

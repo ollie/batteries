@@ -230,7 +230,7 @@ class App < Sinatra::Base
 
   post '/items/new' do
     item = Item.new
-    item.set_fields(params[:item], %i[name css_class])
+    item.set_fields(params[:item], %i[enabled name css_class])
 
     if item.valid?
       item.save
@@ -250,7 +250,7 @@ class App < Sinatra::Base
 
   post '/items/:id/edit' do
     item = Item.with_pk!(params[:id])
-    item.set_fields(params[:item], %i[name css_class])
+    item.set_fields(params[:item], %i[enabled name css_class])
 
     if item.valid?
       item.save

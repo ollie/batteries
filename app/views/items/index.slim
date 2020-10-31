@@ -7,10 +7,12 @@
 .row
   - Item.ordered.each do |item|
     .col-sm-6.col-lg-4
-      .border.mb-3.mb-sm-4.p-3
+      .border.mb-3.mb-sm-4.p-3 class=('op-30' unless item.enabled)
         h2.h4
           a href=item_path(item.id)
             = item.name
+            - unless item.enabled
+              small.text-black-50 = ' (vypnuto)'
 
         ul.list-unstyled.mb-0
           - item.slots.each.with_index do |slot, index|
