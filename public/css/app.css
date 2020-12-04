@@ -68,7 +68,7 @@
 }
 
 .ui-droppable-hover {
-  background-color: #fff8da;
+  background-color: #fff8da !important;
 }
 
 .ui-draggable-handle {

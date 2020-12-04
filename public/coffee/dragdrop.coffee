@@ -16,5 +16,8 @@ class @Dragdrop
         url = $slot.data('accept-url')
         url = url.replace(':battery_id', batteryId)
 
-        window.location = url
+        if $slot.hasClass('battery-item') && confirm("Vyměnit baterii #{$slot.find('.battery-name').text()}?")
+          window.location = url
+        else if !$slot.hasClass('battery-item')
+          window.location = url
     )

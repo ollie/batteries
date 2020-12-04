@@ -16,7 +16,11 @@
           batteryId = $battery.data('id');
           url = $slot.data('accept-url');
           url = url.replace(':battery_id', batteryId);
-          return window.location = url;
+          if ($slot.hasClass('battery-item') && confirm(`Vyměnit baterii ${$slot.find('.battery-name').text()}?`)) {
+            return window.location = url;
+          } else if (!$slot.hasClass('battery-item')) {
+            return window.location = url;
+          }
         }
       });
     }

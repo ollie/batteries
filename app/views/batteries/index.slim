@@ -6,7 +6,7 @@
 
         - item.slots.each.with_index do |slot, i|
           - if slot.battery
-            span.battery-item style=battery_style(slot.battery)
+            span.js-droppable.battery-item style=battery_style(slot.battery) data-accept-url=accept_battery_path(slot.id, ':battery_id')
               span.battery-name style=battery_name_style(slot.battery)
                 = slot.battery.name
               a.battery-action-icon.battery-remove href=clear_slot_path(slot.id) title="Vyndat baterii" &times;
