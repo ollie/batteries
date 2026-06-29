@@ -8,7 +8,6 @@ form action=url method="post"
         name="group[name]"
         value=group.name
         class=('is-invalid' if group.errors.on(:name))
-        autofocus
       )
       - if group.errors.on(:name)
         .invalid-feedback = group.errors.on(:name).join(', ')

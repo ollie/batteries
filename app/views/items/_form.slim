@@ -16,7 +16,6 @@ form action=url method="post"
         name="item[name]"
         value=item.name
         class=('is-invalid' if item.errors.on(:name))
-        autofocus
       )
       - if item.errors.on(:name)
         .invalid-feedback = item.errors.on(:name).join(', ')

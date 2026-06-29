@@ -8,7 +8,6 @@ form action=url method="post"
         name="battery[name]"
         value=battery.name
         class=('is-invalid' if battery.errors.on(:name))
-        autofocus
       )
       - if battery.errors.on(:name)
         .invalid-feedback = battery.errors.on(:name).join(', ')
